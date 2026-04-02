@@ -646,6 +646,11 @@ class ProHangVoice:
                             self.log("đang kích hoạt Stream...")
                             await self.fire_stream()
 
+                    elif t == "VOICE_STATE_UPDATE":
+                        if d.get("session_id") == self.session_id and d.get("channel_id") is None:
+                            self.log("Phát hiện bị văng khỏi phòng. Đang thử kết nối lại...")
+                            await self.join_voice()
+                
                 elif op == 9:
                     self.log("Phiên hết hạn, đang tạo phiên mới...")
                     self.session_id = None
